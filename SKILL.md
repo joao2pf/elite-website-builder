@@ -22,8 +22,10 @@ Without direction, it fills in gaps with the statistical average of its training
 data: purple gradients, Tailwind card grids, Inter font, zero personality. Each
 level of this workflow eliminates a different source of genericness.
 
-**The pattern:** Levels 1–5 accumulate context into a single growing Design Brief.
-The final consolidation step synthesizes everything into a coherent Final Design
+**The pattern:** All sources are gathered upfront in a single Intake step — one
+round of questions at most. Then Levels 1–5 run in order, accumulating context
+into a single growing Design Brief without stopping to ask for new inputs. The
+final consolidation step synthesizes everything into a coherent Final Design
 Spec. Then you build.
 
 **Reference files in this skill:**
@@ -47,23 +49,59 @@ state at the end of each level. Add sections as you complete each level:
 
 ---
 
+## Intake — Gather All Sources Upfront
+
+This step runs ONCE, at the very start, before any level. Its job is to collect
+everything the workflow needs so the levels can run end-to-end without
+interrupting the user again.
+
+**1. Scan the initial message** for the four source types:
+
+| Source | Feeds | What counts as "provided" |
+|---|---|---|
+| Intent | Level 1 | What / Who / Goal / Framework (see Level 1) |
+| Screenshots | Level 3 | Attached images of sites or designs the user likes |
+| Reference URL(s) | Level 4 | Any URL of a site to learn design techniques from |
+| Components | Level 5 | Pasted code or links from 21st.dev, CodePen, etc. |
+
+**2. If anything is missing, ask ONE grouped message** covering all gaps at once:
+- Any missing intent fields (What / Who / Goal / Framework)
+- *"Do you have screenshots of sites you like? Attach them (Dribbble,
+  awwwards.com, godly.website, Pinterest...) — or say **skip**."*
+- *"Is there a site whose design you want me to learn from? Paste the URL — or
+  say **skip**."*
+- *"Do you have specific components to integrate (21st.dev, CodePen...)? Paste
+  the code or links, and tell me where each goes — or say **skip**."*
+
+Make clear that screenshots, URLs, and components are all optional — a run with
+only the intent still produces substantially better output than a raw prompt.
+
+**3. If the initial message already contains all sources** (or the user has
+explicitly skipped the optional ones), do NOT ask anything — proceed directly.
+
+After Intake, run Levels 1–5 **in order**, each applying its full instructions to
+the material collected here. Do not stop between levels to request new inputs.
+The only acceptable mid-flow questions are genuine clarifications where the
+instructions cannot be applied without a user decision (e.g., a material style
+conflict at Level 5 that the consolidation rules cannot resolve).
+
+---
+
 ## Level 1 — The Raw Prompter
 
-The user arrives with a rough idea. Your job is to capture their intent cleanly
-before adding any design direction — design decisions imposed before the intent
-is clear just anchor the wrong things.
+Capture the user's intent cleanly before adding any design direction — design
+decisions imposed before the intent is clear just anchor the wrong things.
 
-Extract and confirm:
+From the Intake material, extract:
 - **What**: The page/product type (landing page, dashboard, portfolio, SaaS, etc.)
 - **Who**: Target audience
 - **Goal**: The page's primary job (signups, showcasing, selling, informing)
 - **Framework**: Plain HTML/CSS/JS, React, Next.js — or no preference
 
-If any of these are missing, ask once and group all questions together.
+All four should already be answered at Intake. If the user declined to specify
+one, choose a sensible default and note it in the brief — do not re-ask.
 
-Write **[L1] Core Intent** in the Design Brief.
-
-Then say: *"Got it. Moving to Level 2 — I'll enrich this with design direction."*
+Write **[L1] Core Intent** in the Design Brief and move to Level 2.
 
 ---
 
@@ -97,19 +135,16 @@ world — "dispatch software for independent freight brokers" is.
   that axis and explain what you changed and why.
 
 Write **[L2] Design Direction** in the Design Brief. Show the user the token system
-and the critique in a concise summary. Then say:
-
-*"Level 2 done. Level 3: do you have screenshots of sites you like? Attach them
-(from places like Dribbble, awwwards.com, godly.website, or Pinterest), or type
-**skip** to go straight to Level 4."*
+and the critique in a concise summary, then move to Level 3.
 
 ---
 
 ## Level 3 — Visual Director (optional)
 
-**If the user skips:** Write "Level 3 skipped" in the brief and move to Level 4.
+**If no screenshots were provided at Intake:** Write "Level 3 skipped" in the
+brief and move to Level 4.
 
-**If the user attaches screenshots**, analyze each one:
+**If the user attached screenshots**, analyze each one:
 
 - **Palette**: Dominant and accent colors (estimate hex where possible)
 - **Typography style**: Serif vs. sans, weight contrast, size hierarchy
@@ -124,19 +159,16 @@ and the critique in a concise summary. Then say:
   consolidation step will resolve them.
 
 Write **[L3] Visual References** in the Design Brief. Show the user a crisp
-summary of what you extracted. Then say:
-
-*"Level 3 done. Level 4: paste the URL of a site whose design you want to learn
-from — I'll analyze its HTML, CSS, and JS to extract what makes it work. Or type
-**skip** to go to Level 5."*
+summary of what you extracted, then move to Level 4.
 
 ---
 
 ## Level 4 — The Cloner
 
-**If the user skips:** Write "Level 4 skipped" and move to Level 5.
+**If no reference URL was provided at Intake:** Write "Level 4 skipped" and move
+to Level 5.
 
-**If the user provides a URL**, follow the pipeline from `references/teardown.md`
+**If the user provided a URL**, follow the pipeline from `references/teardown.md`
 (Steps 1–4) to analyze the site. The goal is not to clone it wholesale — it's
 to understand *how* it works so you can borrow techniques intelligently.
 
@@ -166,21 +198,16 @@ Reusable patterns: [layout or structural logic worth adapting]
 Be specific — "GSAP ScrollTrigger with scrub:true on the hero, scaling from 1.2
 to 1.0" is useful. "Uses scroll animations" is not.
 
-Write **[L4] Teardown Intelligence** in the Design Brief. Then say:
-
-*"Level 4 done. Level 5: paste components from 21st.dev, CodePen, or similar that
-you want to integrate. Paste the code directly or link it, and tell me where it
-goes in the page. Type **done** when you're finished, or **skip** if you don't
-have any."*
+Write **[L4] Teardown Intelligence** in the Design Brief, then move to Level 5.
 
 ---
 
 ## Level 5 — Component Sniper
 
-**If the user skips or types "done" immediately:** Write "Level 5 skipped" and
-move to Final Consolidation.
+**If no components were provided at Intake:** Write "Level 5 skipped" and move
+to Final Consolidation.
 
-**For each component the user pastes**, do three things:
+**For each component provided**, do three things:
 
 1. **Identify it**: What is it (nav, hero, card, button, testimonial, etc.)? What
    design language does it have (colors, fonts, borders, shadows)?
@@ -188,8 +215,11 @@ move to Final Consolidation.
 2. **Check compatibility**: Does it conflict with the existing Design Brief?
    Conflicts mean: different color system, different font treatment, or a design
    language that doesn't fit the Level 1 brief's world. If there's a conflict,
-   name it clearly and ask: *adopt this component's style* (overrides L2 tokens)
-   or *adapt it to fit the existing brief* (keep tokens, change component's surface)?
+   name it clearly and resolve it yourself by default: **adapt the component to
+   fit the existing brief** (keep the brief's tokens, change the component's
+   surface). Only ask the user — *adopt this component's style* vs. *adapt it* —
+   when the component's design language seems to be the very reason the user
+   chose it and adapting would destroy what they wanted from it.
 
 3. **Plan the adaptation**: Note what needs to change to make it fit (swap the
    hardcoded colors for the brief's palette, change the font, adjust spacing, etc.).
@@ -201,8 +231,7 @@ token system from the Design Brief. Beautiful parts, ugly whole is a real failur
 mode. Catch it here, not after the prototype is built.
 
 Write **[L5] Components** in the Design Brief with each accepted component, its
-source, and the adaptation plan. Then say: *"Level 5 done. Moving to final
-consolidation."*
+source, and the adaptation plan, then move to Final Consolidation.
 
 ---
 
@@ -232,19 +261,20 @@ choose one direction, adapt everything else to match, and explain your choice.
 **4. One source of truth per design decision.** Remove duplicate instructions.
 If both L2 and L4 specify colors, L4 wins — keep only the L4 values.
 
-**5. Check for Frankenstein.** Are all components adapated to share the same
+**5. Check for Frankenstein.** Are all components adapted to share the same
 palette and typefaces? If not, add explicit adaptation instructions to the spec.
 
-Present the Final Design Spec as a clean, structured summary. Ask:
-*"Does this look right? Say **build** to generate the prototype, or tell me what
-to adjust."*
+Present the Final Design Spec as a clean, structured summary, then proceed
+directly to building the HTML prototype — do not wait for approval. The user
+reviews the spec alongside the finished prototype and can request adjustments
+to either.
 
 ---
 
 ## HTML Prototype
 
-When the user approves the spec, generate a **self-contained single-file HTML
-prototype** that implements the Final Design Spec.
+Generate a **self-contained single-file HTML prototype** that implements the
+Final Design Spec.
 
 Read `references/design-principles.md` before building — it contains principles
 that significantly affect output quality. In particular:
@@ -284,4 +314,5 @@ Present the file and offer next steps:
 - Iterate on specific sections
 - Adjust the signature element
 - Replace components with alternatives
-- Add another level of refinement on any ax
+- Add another level of refinement on any axis (new screenshots, another
+  teardown URL, or additional components can be provided at any time)

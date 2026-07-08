@@ -10,7 +10,7 @@ Claude produces generic output when given vague prompts. Without direction, it f
 
 ## How It Works
 
-The skill accumulates a **Design Brief** across 5 levels. Each level eliminates a different source of genericness:
+The skill collects all your inputs upfront in a single **Intake** step — your intent, screenshots, reference URLs, and components — then runs 5 levels in sequence without interrupting you again. Each level eliminates a different source of genericness:
 
 | Level | Name | What It Does |
 |---|---|---|
@@ -53,20 +53,22 @@ Invoke the skill and describe what you want to build:
 >  Plain HTML, no framework."
 ```
 
-The skill will walk you through each level in sequence. Levels 3, 4, and 5 are optional — type `skip` at any point to move forward.
+At the start, the skill asks one grouped question for anything missing: screenshots of sites you like, a reference URL to tear down, and components to integrate. Answer (or `skip` any of them) and the whole pipeline runs to completion — no further prompts.
+
+**Power move:** put everything in your first message — intent, screenshots attached, reference URL, pasted components — and the skill goes straight from your prompt to a finished prototype with zero questions.
 
 ### Level 2 is always automatic
 
 You don't need to know anything about design for Level 2. The skill reads the `design-principles.md` reference and produces a token system (palette, typefaces, layout concept, signature element) — then critiques it for generic defaults before showing you the result.
 
-### Skipping levels
+### Optional sources
 
-You decide how deep to go. A Level 1 + 2 run still produces substantially better output than a raw prompt. Levels 3–5 are for when you want to push further.
+You decide how deep to go. A run with only your intent (Levels 1 + 2) still produces substantially better output than a raw prompt. The optional sources are for when you want to push further:
 
 ```
-Level 3 → attach screenshots from Dribbble, awwwards.com, godly.website, or Pinterest
-Level 4 → paste a URL of a site whose design you admire
-Level 5 → paste components from 21st.dev, CodePen, or similar
+Screenshots (Level 3) → attach from Dribbble, awwwards.com, godly.website, or Pinterest
+Reference URL (Level 4) → a site whose design you admire, torn down for techniques
+Components (Level 5) → paste from 21st.dev, CodePen, or similar
 ```
 
 ## What Makes the Final Output Different
